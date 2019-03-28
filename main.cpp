@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     if(desiredScreen>a.screens().size()-1)
         desiredScreen = a.screens().size()-1;
 
-    QScreen* screen1 = a.screens().at(1);
+    QScreen* screen1 = a.screens().at(desiredScreen);
 
 
     std::vector<int> parameters;
