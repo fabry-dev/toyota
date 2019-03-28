@@ -117,11 +117,11 @@ begin:
         }
 
         videoFrameCount = videoFrameCount2;
-        qDebug()<<videoFrameCount;
+      //  qDebug()<<videoFrameCount;
         loadMutex.unlock();
 
         //add the orbbec frame
-        astra::Frame frame = reader.get_latest_frame();
+        astra::Frame frame = reader.get_latest_frame(5000);
         const auto depthFrame = frame.get<astra::DepthFrame>();
 
         int h = depthFrame.height();
