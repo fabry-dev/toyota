@@ -117,6 +117,7 @@ begin:
         }
 
         videoFrameCount = videoFrameCount2;
+        qDebug()<<videoFrameCount;
         loadMutex.unlock();
 
         //add the orbbec frame
