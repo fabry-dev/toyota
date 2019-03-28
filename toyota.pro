@@ -38,10 +38,10 @@ FORMS += \
         mainwindow.ui
 
 INCLUDEPATH += /usr/local/include/opencv4
-INCLUDEPATH += /home/fred/astra/include
-INCLUDEPATH += /home/fred/astra/samples/common
+INCLUDEPATH += /home/$$(USER)/astra/include
+INCLUDEPATH += /home/$$(USER)/astra/samples/common
 
 
 LIBS +=  -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui -lopencv_video -lopencv_videoio
 
-LIBS += -L"/home/fred/astra/bin/lib" -lastra -lastra_core -lastra_core_api
+LIBS += -L"/home/$$(USER)/astra/bin/lib" -lastra -lastra_core -lastra_core_api
