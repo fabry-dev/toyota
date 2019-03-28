@@ -69,6 +69,7 @@ void videoWorker::loadLoopVideo()
     loadMutex.lock();
     video->release();
     QString videoName = PATH+"background.mp4";
+    qDebug()<<videoName;
     video->open(videoName.toStdString().c_str());
     videoFrameCount = 0;
     loadMutex.unlock();
@@ -82,6 +83,7 @@ void videoWorker::startShortVideo()
     shortVideo = true;
     loadMutex.lock();
     video->release();
+
     QString videoName = PATH+"video.mp4";
     video->open(videoName.toStdString().c_str());
     videoFrameCount = 0;
