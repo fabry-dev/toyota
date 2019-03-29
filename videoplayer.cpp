@@ -65,7 +65,7 @@ void videoWorker::init()
 
 void videoWorker::loadLoopVideo()
 {
-    showShape = true;
+    showShape = false;
     shortVideo = false;
     loadMutex.lock();
     video->release();
@@ -181,7 +181,7 @@ begin:
 
         h = image.rows;
         w = image.cols;
-        if(showShape)
+        if((showShape)&&(shortVideo))
         {
             for(int x=0;x<image.cols;x++)
                 for(int y=0;y<image.rows;y++)
@@ -195,8 +195,6 @@ begin:
                         //  qDebug()<<"bug";
                         break;
                     }
-
-
 
                     float a;
                     if((x<w)&&(y<h))
