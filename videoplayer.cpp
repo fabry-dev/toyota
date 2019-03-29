@@ -43,7 +43,7 @@ videoWorker::videoWorker(QWidget *parent, QString PATH, std::vector<int> paramet
 
 void videoWorker::init()
 {
-    conf = false;
+
     astra::initialize();
 
     reader = streamSet.create_reader();
@@ -65,6 +65,7 @@ void videoWorker::init()
 
 void videoWorker::loadLoopVideo()
 {
+    showShape = true;
     shortVideo = false;
     loadMutex.lock();
     video->release();
@@ -80,6 +81,8 @@ void videoWorker::startShortVideo()
 
     if(shortVideo)
         return;
+
+    showShape = false;
     shortVideo = true;
     loadMutex.lock();
     video->release();
@@ -117,7 +120,11 @@ begin:
         }
 
         videoFrameCount = videoFrameCount2;
-      //  qDebug()<<videoFrameCount;
+
+        if((videoFrameCount>220)&&(!showShape))
+            showShape = true;
+
+        //   qDebug()<<videoFrameCount;
         loadMutex.unlock();
 
         //add the orbbec frame
@@ -134,16 +141,16 @@ begin:
         {
             for (int x = 0; x < depthFrame.width(); x++)
             {
-               uint d = depthFrame.data()[x+y*depthFrame.width()];
+                uint d = depthFrame.data()[x+y*depthFrame.width()];
 
                 if((d<DMIN) || (d>DMAX))
                     image.at<float>(y, x)= 0;
-               else if((d-DMIN)<BLUR_BAND)
+                else if((d-DMIN)<BLUR_BAND)
                 {
                     float f = (float)(d-DMIN)/BLUR_BAND;
                     image.at<float>(y, x)= f;
                 }
-                 else if(abs((int)DMAX-d)<BLUR_BAND)
+                else if(abs((int)DMAX-d)<BLUR_BAND)
                 {
                     float f = (float)abs((int)DMAX-d)/BLUR_BAND;
                     image.at<float>(y, x)= f;
@@ -174,59 +181,60 @@ begin:
 
         h = image.rows;
         w = image.cols;
-
-        for(int x=0;x<image.cols;x++)
-            for(int y=0;y<image.rows;y++)
-            {
-
-                X = x+OFFSET_X;
-                Y = y+OFFSET_Y;
-
-                if((X<0)||(Y<0)||(X>=videoFrame.cols)||(Y>=videoFrame.rows))
+        if(showShape)
+        {
+            for(int x=0;x<image.cols;x++)
+                for(int y=0;y<image.rows;y++)
                 {
-                    //  qDebug()<<"bug";
-                    break;
-                }
 
+                    X = x+OFFSET_X;
+                    Y = y+OFFSET_Y;
 
-
-                float a;
-                if((x<w)&&(y<h))
-                {
-                    a = image.at<float>(Point(x,y));
-                    if(a > 0)
+                    if((X<0)||(Y<0)||(X>=videoFrame.cols)||(Y>=videoFrame.rows))
                     {
-                        videoFrame.at<Vec3b>(Point(X,Y)) += red*a;
+                        //  qDebug()<<"bug";
+                        break;
                     }
-                }
 
-                if((x+offset<w)&&(y+offset<h))
-                {
 
-                    a = image.at<float>(Point(x+offset,y+offset));
-                    if(a > 0)
+
+                    float a;
+                    if((x<w)&&(y<h))
                     {
-                        videoFrame.at<Vec3b>(Point(X,Y)) += green*a;
+                        a = image.at<float>(Point(x,y));
+                        if(a > 0)
+                        {
+                            videoFrame.at<Vec3b>(Point(X,Y)) += red*a;
+                        }
                     }
-                }
 
-                if((x-offset>=0)&&(y-offset>=0))
-                {
-
-                    a = image.at<float>(Point(x-offset,y-offset));
-                    if(a > 0)
+                    if((x+offset<w)&&(y+offset<h))
                     {
-                        videoFrame.at<Vec3b>(Point(X,Y)) += blue*a;
+
+                        a = image.at<float>(Point(x+offset,y+offset));
+                        if(a > 0)
+                        {
+                            videoFrame.at<Vec3b>(Point(X,Y)) += green*a;
+                        }
                     }
+
+                    if((x-offset>=0)&&(y-offset>=0))
+                    {
+
+                        a = image.at<float>(Point(x-offset,y-offset));
+                        if(a > 0)
+                        {
+                            videoFrame.at<Vec3b>(Point(X,Y)) += blue*a;
+                        }
+                    }
+
+
+
+
                 }
 
 
-
-
-            }
-
-
-
+        }
 
 
 

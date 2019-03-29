@@ -67,7 +67,7 @@ private:
     bool shortVideo;
     astra::StreamReader reader;
      astra::StreamSet streamSet;
-     bool conf;
+     bool showShape;
 
 
 signals:
