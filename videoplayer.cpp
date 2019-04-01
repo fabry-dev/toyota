@@ -6,8 +6,8 @@
 #define DMAX parameters[1]
 #define BLUR_BAND ((DMAX-DMIN)/10)
 
-#define OFFSET_X parameters[2]
-#define OFFSET_Y parameters[3]
+#define OFFSET_X (parameters[2])
+#define OFFSET_Y (parameters[3])
 
 
 
@@ -46,10 +46,13 @@ videoWorker::videoWorker(QWidget *parent, QString PATH, std::vector<int> paramet
 void videoWorker::init()
 {
 
-    float ratio = 0.75;
+    float ratio = 2.1;
 
-    int w = (int)896*ratio;
-    int h =(int)672*ratio;
+    //1344x672
+    //640x480;
+
+    int w = (int)640*ratio;
+    int h =(int)480*ratio;
 
     image_size = Size(w,h);
 
@@ -174,8 +177,8 @@ begin:
         resize(image,image,image_size);//resize image
 
 
-        //qDebug()<<"offset x "<<(videoFrame.cols-image_size.width)/2;
-        //qDebug()<<"offset y "<<(videoFrame.rows-image_size.height);
+       // qDebug()<<"offset x "<<(videoFrame.cols-image_size.width)/2;
+     //   qDebug()<<"offset y "<<(videoFrame.rows-image_size.height)/2;
 
         medianBlur ( image,image, 5 );
 
@@ -208,7 +211,7 @@ begin:
                     if((X<0)||(Y<0)||(X>=videoFrame.cols)||(Y>=videoFrame.rows))
                     {
                         //  qDebug()<<"bug";
-                        break;
+                        continue;
                     }
 
                     float a;
