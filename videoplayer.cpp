@@ -11,11 +11,11 @@
 
 
 
-videoplayer::videoplayer(QWidget *parent, QString PATH,std::vector<int>parameters):QLabel(parent),PATH(PATH)
+videoplayer::videoplayer(QWidget *parent, QString PATH,std::vector<int>parameters,bool DEBUG):QLabel(parent),PATH(PATH)
 {
 
     videoThread = new QThread;
-    worker = new videoWorker(NULL,PATH,parameters);
+    worker = new videoWorker(NULL,PATH,parameters,DEBUG);
     worker->moveToThread(videoThread);
     connect(worker,SIGNAL(frameReady(QPixmap)),this,SLOT(getNuFrame(QPixmap)));
     connect(videoThread,SIGNAL(started()),worker,SLOT(init()),Qt::QueuedConnection);
@@ -33,7 +33,7 @@ void videoplayer::getNuFrame(QPixmap frame)
 
 
 
-videoWorker::videoWorker(QWidget *parent, QString PATH, std::vector<int> parameters):QObject(parent),PATH(PATH),parameters(parameters)
+videoWorker::videoWorker(QWidget *parent, QString PATH, std::vector<int> parameters, bool DEBUG):QObject(parent),PATH(PATH),parameters(parameters),DEBUG(DEBUG)
 {
     qDebug()<<"DISTANCE_MIN: "<<parameters[0];
     qDebug()<<"DISTANCE_MAX: "<<parameters[1];
@@ -173,6 +173,10 @@ begin:
 
         resize(image,image,image_size);//resize image
 
+
+        //qDebug()<<"offset x "<<(videoFrame.cols-image_size.width)/2;
+        //qDebug()<<"offset y "<<(videoFrame.rows-image_size.height);
+
         medianBlur ( image,image, 5 );
 
 
@@ -192,7 +196,7 @@ begin:
 
         h = image.rows;
         w = image.cols;
-        if(((showShape)&&(shortVideo)||false))
+        if(((showShape)&&(shortVideo)||DEBUG))
         {
             for(int x=0;x<image.cols;x++)
                 for(int y=0;y<image.rows;y++)

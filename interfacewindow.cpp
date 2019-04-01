@@ -1,11 +1,11 @@
 #include "interfacewindow.h"
 
-interfaceWindow::interfaceWindow(QWidget *parent,QString(PATH),std::vector<int>parameters) : QWidget(parent),PATH(PATH)
+interfaceWindow::interfaceWindow(QWidget *parent,QString(PATH),std::vector<int>parameters,bool DEBUG) : QWidget(parent),PATH(PATH)
 {
 
     sw = new serialWatcher(this);
 
-    vp = new videoplayer(this,PATH,parameters);
+    vp = new videoplayer(this,PATH,parameters,DEBUG);
     vp->resize(size());
     vp->show();
 

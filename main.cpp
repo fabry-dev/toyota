@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
     parameters.push_back(offset_y);
 
 
-    interfaceWindow *iw = new interfaceWindow(NULL,PATH,parameters);
+    interfaceWindow *iw = new interfaceWindow(NULL,PATH,parameters,DEBUG);
     iw->setGeometry(screen1->geometry().x(),screen1->geometry().y(),1344,672);
     iw->showFullScreen();
     iw->show();

@@ -12,7 +12,7 @@ class interfaceWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit interfaceWindow(QWidget *parent = nullptr, QString PATH="", std::vector<int> parameters=std::vector<int>());
+    explicit interfaceWindow(QWidget *parent = nullptr, QString PATH="", std::vector<int> parameters=std::vector<int>(), bool DEBUG=false);
 
 private:
     QString PATH;

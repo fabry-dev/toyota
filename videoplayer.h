@@ -33,7 +33,7 @@ class videoplayer : public QLabel
 {
     Q_OBJECT
 public:
-    videoplayer(QWidget *parent = 0, QString PATH="", std::vector<int> parameters=std::vector<int>());
+    videoplayer(QWidget *parent = 0, QString PATH="", std::vector<int> parameters=std::vector<int>(), bool DEBUG=false);
 private:
     QString PATH;
     QThread *videoThread;
@@ -54,7 +54,7 @@ class videoWorker : public QObject
 {
     Q_OBJECT
 public:
-    videoWorker(QWidget *parent = 0, QString PATH="", std::vector<int> parameters=std::vector<int>());
+    videoWorker(QWidget *parent = 0, QString PATH="", std::vector<int> parameters=std::vector<int>(),bool DEBUG=false);
 
 private:
     QString PATH;
@@ -69,7 +69,7 @@ private:
      astra::StreamSet streamSet;
      bool showShape;
      Size image_size;
-
+    bool DEBUG;
 
 signals:
     void frameReady(QPixmap frame);
