@@ -46,7 +46,7 @@ videoWorker::videoWorker(QWidget *parent, QString PATH, std::vector<int> paramet
 void videoWorker::init()
 {
 
-    float ratio = 2.1*0.7;
+    float ratio = 2.1*0.85;
 
     //1344x672
     //640x480;
