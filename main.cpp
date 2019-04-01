@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 
     interfaceWindow *iw = new interfaceWindow(NULL,PATH,parameters);
     iw->setGeometry(screen1->geometry().x(),screen1->geometry().y(),1344,672);
-    //iw->showFullScreen();
+    iw->showFullScreen();
     iw->show();
 
 
