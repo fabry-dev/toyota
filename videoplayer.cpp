@@ -9,6 +9,8 @@
 #define OFFSET_X parameters[2]
 #define OFFSET_Y parameters[3]
 
+
+
 videoplayer::videoplayer(QWidget *parent, QString PATH,std::vector<int>parameters):QLabel(parent),PATH(PATH)
 {
 
@@ -44,10 +46,16 @@ videoWorker::videoWorker(QWidget *parent, QString PATH, std::vector<int> paramet
 void videoWorker::init()
 {
 
+    float ratio = 0.75;
+
+    int w = (int)896*ratio;
+    int h =(int)672*ratio;
+
+    image_size = Size(w,h);
+
+
     astra::initialize();
-
     reader = streamSet.create_reader();
-
     reader.stream<astra::DepthStream>().start();
     processTimer = new QTimer();
     processTimer->setInterval(1000/VIDEO_FPS);
@@ -161,7 +169,9 @@ begin:
         }
 
 
-        resize(image,image,Size(896,672));//resize image
+        flip(image, image, +1);
+
+        resize(image,image,image_size);//resize image
 
         medianBlur ( image,image, 5 );
 
@@ -181,7 +191,7 @@ begin:
 
         h = image.rows;
         w = image.cols;
-        if((showShape)&&(shortVideo))
+        if(((showShape)&&(shortVideo)||false))
         {
             for(int x=0;x<image.cols;x++)
                 for(int y=0;y<image.rows;y++)

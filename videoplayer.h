@@ -68,6 +68,7 @@ private:
     astra::StreamReader reader;
      astra::StreamSet streamSet;
      bool showShape;
+     Size image_size;
 
 
 signals:
