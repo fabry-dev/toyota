@@ -176,8 +176,6 @@ begin:
         medianBlur ( image,image, 5 );
 
 
-
-
         //B G R
         cv::Vec3b green = cv::Vec3b(0x33,0xFF,0x30);
         cv::Vec3b blue = cv::Vec3b(0xD5,0x9A,0x19);
