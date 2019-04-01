@@ -169,7 +169,7 @@ begin:
         }
 
 
-        flip(image, image, +1);
+     //   flip(image, image, +1);
 
         resize(image,image,image_size);//resize image
 
