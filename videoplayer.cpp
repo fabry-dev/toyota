@@ -46,7 +46,7 @@ videoWorker::videoWorker(QWidget *parent, QString PATH, std::vector<int> paramet
 void videoWorker::init()
 {
 
-    float ratio = 2.1;
+    float ratio = 2.1*0.7;
 
     //1344x672
     //640x480;
@@ -54,7 +54,13 @@ void videoWorker::init()
     int w = (int)640*ratio;
     int h =(int)480*ratio;
 
+
+
+
     image_size = Size(w,h);
+
+    qDebug()<<"offset x "<<(1344-image_size.width)/2;
+    qDebug()<<"offset y "<<(672-image_size.height)/2;
 
 
     astra::initialize();
@@ -177,8 +183,7 @@ begin:
         resize(image,image,image_size);//resize image
 
 
-       // qDebug()<<"offset x "<<(videoFrame.cols-image_size.width)/2;
-     //   qDebug()<<"offset y "<<(videoFrame.rows-image_size.height)/2;
+
 
         medianBlur ( image,image, 5 );
 
