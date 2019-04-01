@@ -187,6 +187,9 @@ begin:
 
         int X,Y;
 
+
+
+
         h = image.rows;
         w = image.cols;
         if(((showShape)&&(shortVideo)||false))
